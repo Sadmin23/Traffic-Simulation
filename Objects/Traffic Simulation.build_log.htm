@@ -35,31 +35,20 @@ main.c(5): warning: In file included from...
 ./USART.h(18): warning: // comments are not allowed in this language [-Wcomment]
 // USART 2 Configuration
 ^
-main.c(10): warning: // comments are not allowed in this language [-Wcomment]
-        // 1. Enable the GPIO CLOCK
-        ^
-main.c(7): warning: no previous prototype for function 'GPIO_Config' [-Wmissing-prototypes]
-void GPIO_Config (void)
-     ^
-main.c(7): note: declare 'static' if the function is not intended to be used outside of this translation unit
-void GPIO_Config (void)
-^
-static 
-main.c(21): warning: no previous prototype for function 'delay' [-Wmissing-prototypes]
-void delay (uint32_t time)
-     ^
-main.c(21): note: declare 'static' if the function is not intended to be used outside of this translation unit
-void delay (uint32_t time)
-^
-static 
-main.c(43): warning: mixing declarations and code is a C99 extension [-Wdeclaration-after-statement]
+main.c(29): warning: // comments are not allowed in this language [-Wcomment]
+                GPIO_WritePin(GPIOA, 0, GPIO_PIN_RESET);//start g1
+                                                        ^
+main.c(12): warning: mixing declarations and code is a C99 extension [-Wdeclaration-after-statement]
         GPIO_InitTypeDef x;
                          ^
-6 warnings generated.
+main.c(16): warning: unused variable 'start' [-Wunused-variable]
+        uint32_t start=getmsTick();
+                 ^
+5 warnings generated.
 compiling main.c...
 linking...
-Program Size: Code=1024 RO-data=468 RW-data=0 ZI-data=1640  
-".\Objects\Traffic Simulation.axf" - 0 Error(s), 6 Warning(s).
+Program Size: Code=1184 RO-data=468 RW-data=0 ZI-data=1640  
+".\Objects\Traffic Simulation.axf" - 0 Error(s), 5 Warning(s).
 
 <h2>Software Packages used:</h2>
 
@@ -90,7 +79,7 @@ Package Vendor: Keil
       Source file:   MDK/Device/Source/ARM/STM32F446xx_OPT.s
       Include file:  Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f4xx.h
       Source file:   Drivers/CMSIS/Device/ST/STM32F4xx/Source/Templates/system_stm32f4xx.c
-Build Time Elapsed:  00:00:03
+Build Time Elapsed:  00:00:06
 </pre>
 </body>
 </html>

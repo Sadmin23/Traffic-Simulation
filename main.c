@@ -4,39 +4,8 @@
 #include "SYS_INIT.h"
 #include "USART.h"
 
-void GPIO_Config (void)
-{
-	
-	// 1. Enable the GPIO CLOCK
-	RCC->AHB1ENR |= (1<<0);  
-	
-	// 2. Set the Pin as OUTPUT
-	GPIOA->MODER |= (1<<10);  // pin PA5(bits 11:10) as Output (01)
-	
-	// 3. Configure the OUTPUT MODE
-	GPIOA->OTYPER = 0;
-	GPIOA->OSPEEDR = 0;
-}
-
-void delay (uint32_t time)
-{
-	while (time--);
-}
-
 int main (void)
 {
-/*	
-	initClock();
-	GPIO_Config ();
-	
-	while (1)
-	{
-		GPIOA->BSRR |= (1<<5);  // Set the pin PA5
-		delay (20000000); 
-		GPIOA->BSRR |= ((1<<5) <<16);  // Reset pin PA5
-		delay (20000000); 
-	}
-*/
 	initClock();
 	sysInit();
 	
@@ -44,13 +13,36 @@ int main (void)
 	
 	GPIO_Init(GPIOA, &x);
 	
+	uint32_t start=getmsTick();
+	
 	while(1)
 	{
-		GPIOA->BSRR |= (1<<7);
-		GPIO_WritePin(GPIOA, 7, GPIO_PIN_RESET);
-		ms_delay(1000);
-		GPIO_WritePin(GPIOA, 7, GPIO_PIN_SET);
-		ms_delay(1000);
+		/*
+		GPIO_WritePin(GPIOA, 0, GPIO_PIN_RESET);g1
+		GPIO_WritePin(GPIOA, 1, GPIO_PIN_RESET);y1	
+		GPIO_WritePin(GPIOA, 7, GPIO_PIN_RESET);r1
+		GPIO_WritePin(GPIOA, 8, GPIO_PIN_RESET);r2			
+		GPIO_WritePin(GPIOA, 4, GPIO_PIN_RESET);y2
+		GPIO_WritePin(GPIOA, 5, GPIO_PIN_RESET);g2	
+		*/
+		
+		GPIO_WritePin(GPIOA, 0, GPIO_PIN_RESET);//start g1
+		GPIO_WritePin(GPIOA, 8, GPIO_PIN_RESET);//start r2		
+		ms_delay(3000);
+		GPIO_WritePin(GPIOA, 0, GPIO_PIN_SET);//stop g1		
+		GPIO_WritePin(GPIOA, 1, GPIO_PIN_RESET);//start y1
+		ms_delay(2000);
+		GPIO_WritePin(GPIOA, 1, GPIO_PIN_SET);//stop y1
+		GPIO_WritePin(GPIOA, 7, GPIO_PIN_RESET);//start r1		
+		GPIO_WritePin(GPIOA, 8, GPIO_PIN_SET);//stop r2
+		GPIO_WritePin(GPIOA, 5, GPIO_PIN_RESET);//start g2
+		ms_delay(3000);
+		GPIO_WritePin(GPIOA, 5, GPIO_PIN_SET);//stop g2		
+		GPIO_WritePin(GPIOA, 4, GPIO_PIN_RESET);//start y2
+		ms_delay(2000);
+		GPIO_WritePin(GPIOA, 4, GPIO_PIN_SET);//stop y2
+		GPIO_WritePin(GPIOA, 7, GPIO_PIN_SET);//stop r2
+
 	}	
 	
 }
