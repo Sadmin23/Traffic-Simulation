@@ -47,30 +47,36 @@ traffic delayed = {25000, 5000, 30000};
 main.c(22): note: declare 'static' if the variable is not intended to be used outside of this translation unit
 traffic delayed = {25000, 5000, 30000};
 ^
-main.c(26): warning: implicit declaration of function 'rand' [-Wimplicit-function-declaration]
+main.c(24): warning: no previous extern declaration for non-static variable 'val' [-Wmissing-variable-declarations]
+int val[3]={6,9,10};
+    ^
+main.c(24): note: declare 'static' if the variable is not intended to be used outside of this translation unit
+int val[3]={6,9,10};
+^
+main.c(28): warning: implicit declaration of function 'rand' [-Wimplicit-function-declaration]
     return rand() % 3 + 1;
            ^
-main.c(26): warning: implicit conversion changes signedness: 'int' to 'uint32_t' (aka 'unsigned int') [-Wsign-conversion]
+main.c(28): warning: implicit conversion changes signedness: 'int' to 'uint32_t' (aka 'unsigned int') [-Wsign-conversion]
     return rand() % 3 + 1;
     ~~~~~~ ~~~~~~~~~~~^~~
-main.c(24): warning: no previous prototype for function 'trafficGenerator' [-Wmissing-prototypes]
+main.c(26): warning: no previous prototype for function 'trafficGenerator' [-Wmissing-prototypes]
 uint32_t trafficGenerator(void)
          ^
-main.c(24): note: declare 'static' if the function is not intended to be used outside of this translation unit
+main.c(26): note: declare 'static' if the function is not intended to be used outside of this translation unit
 uint32_t trafficGenerator(void)
 ^
 static 
-main.c(49): warning: // comments are not allowed in this language [-Wcomment]
-                GPIO_WritePin(GPIOA, 6, GPIO_PIN_RESET);//g1
+main.c(63): warning: // comments are not allowed in this language [-Wcomment]
+                GPIO_WritePin(GPIOA, 0, GPIO_PIN_RESET);//start g1
                                                         ^
-main.c(33): warning: mixing declarations and code is a C99 extension [-Wdeclaration-after-statement]
+main.c(37): warning: mixing declarations and code is a C99 extension [-Wdeclaration-after-statement]
         GPIO_InitTypeDef x;
                          ^
-9 warnings generated.
+10 warnings generated.
 compiling main.c...
 linking...
-Program Size: Code=1272 RO-data=468 RW-data=0 ZI-data=1640  
-".\Objects\Traffic Simulation.axf" - 0 Error(s), 9 Warning(s).
+Program Size: Code=1680 RO-data=468 RW-data=0 ZI-data=1640  
+".\Objects\Traffic Simulation.axf" - 0 Error(s), 10 Warning(s).
 
 <h2>Software Packages used:</h2>
 
@@ -97,11 +103,11 @@ Package Vendor: Keil
 
    * Component: Keil::Device:Startup:2.6.3
       Source file:   MDK/Device/Source/ARM/STM32F4xx_OTP.s
-      Source file:   MDK/Device/Source/ARM/STM32F446xx_OPT.s
       Include file:  Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f4xx.h
+      Source file:   MDK/Device/Source/ARM/STM32F446xx_OPT.s
       Source file:   Drivers/CMSIS/Device/ST/STM32F4xx/Source/Templates/arm/startup_stm32f446xx.s
       Source file:   Drivers/CMSIS/Device/ST/STM32F4xx/Source/Templates/system_stm32f4xx.c
-Build Time Elapsed:  00:00:03
+Build Time Elapsed:  00:00:05
 </pre>
 </body>
 </html>
