@@ -3,95 +3,119 @@
 #include "GPIO.h"
 #include "SYS_INIT.h"
 #include "USART.h"
+#include "time.h"
+
+enum
+{
+    A,
+    B,
+    C
+};
 
 typedef struct
 {
-    uint32_t green;
-    uint32_t yellow;
-    uint32_t red;
-} traffic;
-typedef struct
+    int Port;
+    uint16_t Pin;
+} PortPin;
+
+PortPin white[2][3] = {{{A, 6}, {A, 9}, {A, 10}}, {{A, 11}, {B, 5}, {B, 10}}};
+
+GPIO_TypeDef * Find_Port(int Port_no)
 {
-    traffic mode;
-    uint32_t top;
-    uint32_t bottom;
-    uint32_t light;
-} lane;
-
-traffic normal = {15000, 5000, 20000};
-traffic delayed = {25000, 5000, 30000};
-
-int val[3]={6,9,10};
-
-uint32_t trafficGenerator(void)
+    if (Port_no == A)
+				return GPIOA;
+    else if (Port_no == B)
+				return GPIOB;
+    else if (Port_no == C)
+				return GPIOC;
+}	
+	
+int trafficGenerator(void)
 {
     return rand() % 3 + 1;
 }
 int main (void)
-{
-	
+{	
+//    srand(time(0));
 	
 	initClock();
 	sysInit();
 	
-	GPIO_InitTypeDef x;
+	GPIO_InitTypeDef y;
 	
-	GPIO_Init(GPIOA, &x);
-	GPIO_Init(GPIOB, &x);
+	GPIO_Init(GPIOA, &y);
+	GPIO_Init(GPIOB, &y);
 	
 	while(1)
 	{
-/*
-		GPIO_WritePin(GPIOA, 0, GPIO_PIN_RESET);//g1
-		GPIO_WritePin(GPIOA, 1, GPIO_PIN_RESET);//y1	
-		GPIO_WritePin(GPIOA, 7, GPIO_PIN_RESET);//r1
-		GPIO_WritePin(GPIOA, 8, GPIO_PIN_RESET);//r2			
-		GPIO_WritePin(GPIOA, 4, GPIO_PIN_RESET);//y2
-		GPIO_WritePin(GPIOA, 5, GPIO_PIN_RESET);//g2		
-*/	
-/*
-		GPIO_WritePin(GPIOA, 6, GPIO_PIN_RESET);//g1
-		GPIO_WritePin(GPIOA, 9, GPIO_PIN_RESET);//y1	
-		GPIO_WritePin(GPIOA, 10, GPIO_PIN_RESET);//r1
-		GPIO_WritePin(GPIOA, 11, GPIO_PIN_RESET);//r2			
-		GPIO_WritePin(GPIOB, 5, GPIO_PIN_RESET);//g2	
-		GPIO_WritePin(GPIOB, 10, GPIO_PIN_RESET);//g2	
-*/		
-		
-		int i;
+		int i, j, x;
 		
 		GPIO_WritePin(GPIOA, 0, GPIO_PIN_RESET);//start g1
 		GPIO_WritePin(GPIOA, 8, GPIO_PIN_RESET);//start r2		
 //		ms_delay(3000);
 		
-		for (i=0; i<3000/600; i++)
+		for (i=0; i<18000/6000; i++)
 		{
-			GPIO_WritePin(GPIOA, 10, GPIO_PIN_RESET);
-			ms_delay(200);
-			GPIO_WritePin(GPIOA, 10, GPIO_PIN_SET);			
-			GPIO_WritePin(GPIOA, 9, GPIO_PIN_RESET);
-			ms_delay(200);
-			GPIO_WritePin(GPIOA, 9, GPIO_PIN_SET);
-			GPIO_WritePin(GPIOA, 6, GPIO_PIN_RESET);
-			ms_delay(200);
-			GPIO_WritePin(GPIOA, 6, GPIO_PIN_SET);
+			x = trafficGenerator();
+			
+			for (j=0; j<x; j++)
+			{
+				int a = white[0][j].Port;
+				uint16_t b = white[0][j].Pin;
+				GPIO_WritePin(Find_Port(a),b, GPIO_PIN_RESET);
+			}
+			for (j=0; j<6000/600; j++)
+			{
+				GPIO_WritePin(GPIOB, 10, GPIO_PIN_RESET);
+				ms_delay(200);
+				GPIO_WritePin(GPIOB, 10, GPIO_PIN_SET);			
+				GPIO_WritePin(GPIOB, 5, GPIO_PIN_RESET);
+				ms_delay(200);
+				GPIO_WritePin(GPIOB, 5, GPIO_PIN_SET);
+				GPIO_WritePin(GPIOA, 11, GPIO_PIN_RESET);
+				ms_delay(200);
+				GPIO_WritePin(GPIOA, 11, GPIO_PIN_SET);
+			}
+			for (j=0; j<x; j++)
+			{
+				int a = white[0][j].Port;
+				uint16_t b = white[0][j].Pin;
+				GPIO_WritePin(Find_Port(a),b, GPIO_PIN_SET);
+			}
 		}
 		
 		GPIO_WritePin(GPIOA, 0, GPIO_PIN_SET);//stop g1		
 		GPIO_WritePin(GPIOA, 1, GPIO_PIN_RESET);//start y1
 //		ms_delay(2000);
 
-		for (i=0; i<3000/600; i++)
+		for (i=0; i<6000/6000; i++)
 		{
-			GPIO_WritePin(GPIOA, 10, GPIO_PIN_RESET);
-			ms_delay(200);
-			GPIO_WritePin(GPIOA, 10, GPIO_PIN_SET);			
-			GPIO_WritePin(GPIOA, 9, GPIO_PIN_RESET);
-			ms_delay(200);
-			GPIO_WritePin(GPIOA, 9, GPIO_PIN_SET);
-			GPIO_WritePin(GPIOA, 6, GPIO_PIN_RESET);
-			ms_delay(200);
-			GPIO_WritePin(GPIOA, 6, GPIO_PIN_SET);
+			x = trafficGenerator();
+			
+			for (j=0; j<x; j++)
+			{
+				int a = white[0][j].Port;
+				uint16_t b = white[0][j].Pin;
+				GPIO_WritePin(Find_Port(a),b, GPIO_PIN_RESET);
+			}
+			for (j=0; j<6000/600; j++)
+			{
+				GPIO_WritePin(GPIOB, 10, GPIO_PIN_RESET);
+				ms_delay(200);
+				GPIO_WritePin(GPIOB, 10, GPIO_PIN_SET);			
+				GPIO_WritePin(GPIOB, 5, GPIO_PIN_RESET);
+				ms_delay(200);
+				GPIO_WritePin(GPIOB, 5, GPIO_PIN_SET);
+				GPIO_WritePin(GPIOA, 11, GPIO_PIN_RESET);
+				ms_delay(200);
+				GPIO_WritePin(GPIOA, 11, GPIO_PIN_SET);
+			}
+			for (j=0; j<x; j++)
+			{
+				int a = white[0][j].Port;
+				uint16_t b = white[0][j].Pin;
+				GPIO_WritePin(Find_Port(a),b, GPIO_PIN_SET);
+			}
 		}
 
 		GPIO_WritePin(GPIOA, 1, GPIO_PIN_SET);//stop y1
@@ -100,34 +124,68 @@ int main (void)
 		GPIO_WritePin(GPIOA, 5, GPIO_PIN_RESET);//start g2
 //		ms_delay(3000);
 
-		for (i=0; i<3000/600; i++)
+		for (i=0; i<18000/6000; i++)
 		{
-			GPIO_WritePin(GPIOB, 10, GPIO_PIN_RESET);
-			ms_delay(200);
-			GPIO_WritePin(GPIOB, 10, GPIO_PIN_SET);			
-			GPIO_WritePin(GPIOB, 5, GPIO_PIN_RESET);
-			ms_delay(200);
-			GPIO_WritePin(GPIOB, 5, GPIO_PIN_SET);
-			GPIO_WritePin(GPIOA, 11, GPIO_PIN_RESET);
-			ms_delay(200);
-			GPIO_WritePin(GPIOA, 11, GPIO_PIN_SET);
+			x = trafficGenerator();
+			
+			for (j=0; j<x; j++)
+			{
+				int a = white[1][j].Port;
+				uint16_t b = white[1][j].Pin;
+				GPIO_WritePin(Find_Port(a),b, GPIO_PIN_RESET);
+			}
+			for (j=0; j<6000/600; j++)
+			{
+				GPIO_WritePin(GPIOA, 10, GPIO_PIN_RESET);
+				ms_delay(200);
+				GPIO_WritePin(GPIOA, 10, GPIO_PIN_SET);			
+				GPIO_WritePin(GPIOA, 9, GPIO_PIN_RESET);
+				ms_delay(200);
+				GPIO_WritePin(GPIOA, 9, GPIO_PIN_SET);
+				GPIO_WritePin(GPIOA, 6, GPIO_PIN_RESET);
+				ms_delay(200);
+				GPIO_WritePin(GPIOA, 6, GPIO_PIN_SET);
+			}
+			for (j=0; j<x; j++)
+			{
+				int a = white[1][j].Port;
+				uint16_t b = white[1][j].Pin;
+				GPIO_WritePin(Find_Port(a),b, GPIO_PIN_SET);
+			}
 		}
 
 		GPIO_WritePin(GPIOA, 5, GPIO_PIN_SET);//stop g2		
 		GPIO_WritePin(GPIOA, 4, GPIO_PIN_RESET);//start y2
 //		ms_delay(2000);
 
-		for (i=0; i<3000/600; i++)
+		for (i=0; i<6000/6000; i++)
 		{
-			GPIO_WritePin(GPIOB, 10, GPIO_PIN_RESET);
-			ms_delay(200);
-			GPIO_WritePin(GPIOB, 10, GPIO_PIN_SET);			
-			GPIO_WritePin(GPIOB, 5, GPIO_PIN_RESET);
-			ms_delay(200);
-			GPIO_WritePin(GPIOB, 5, GPIO_PIN_SET);
-			GPIO_WritePin(GPIOA, 11, GPIO_PIN_RESET);
-			ms_delay(200);
-			GPIO_WritePin(GPIOA, 11, GPIO_PIN_SET);
+			x = trafficGenerator();
+			
+			for (j=0; j<x; j++)
+			{
+				int a = white[1][j].Port;
+				uint16_t b = white[1][j].Pin;
+				GPIO_WritePin(Find_Port(a),b, GPIO_PIN_RESET);
+			}
+			for (j=0; j<6000/600; j++)
+			{
+				GPIO_WritePin(GPIOA, 10, GPIO_PIN_RESET);
+				ms_delay(200);
+				GPIO_WritePin(GPIOA, 10, GPIO_PIN_SET);			
+				GPIO_WritePin(GPIOA, 9, GPIO_PIN_RESET);
+				ms_delay(200);
+				GPIO_WritePin(GPIOA, 9, GPIO_PIN_SET);
+				GPIO_WritePin(GPIOA, 6, GPIO_PIN_RESET);
+				ms_delay(200);
+				GPIO_WritePin(GPIOA, 6, GPIO_PIN_SET);
+			}
+			for (j=0; j<x; j++)
+			{
+				int a = white[1][j].Port;
+				uint16_t b = white[1][j].Pin;
+				GPIO_WritePin(Find_Port(a),b, GPIO_PIN_SET);
+			}
 		}
 
 		GPIO_WritePin(GPIOA, 4, GPIO_PIN_SET);//stop y2
