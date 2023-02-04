@@ -14,6 +14,16 @@ enum
 
 typedef struct
 {
+    int green;
+    int yellow;
+    int red;
+} traffic;
+
+traffic normal = {18000, 6000, 24000};
+traffic delayed = {24000, 6000, 30000};
+
+typedef struct
+{
     int Port;
     uint16_t Pin;
 } PortPin;
@@ -38,6 +48,8 @@ int main (void)
 {	
 //    srand(time(0));
 	
+	traffic mode = normal;
+	
 	initClock();
 	sysInit();
 	
@@ -54,7 +66,7 @@ int main (void)
 		GPIO_WritePin(GPIOA, 8, GPIO_PIN_RESET);//start r2		
 //		ms_delay(3000);
 		
-		for (i=0; i<18000/6000; i++)
+		for (i=0; i<mode.green/6000; i++)
 		{
 			x = trafficGenerator();
 			
@@ -88,7 +100,7 @@ int main (void)
 		GPIO_WritePin(GPIOA, 1, GPIO_PIN_RESET);//start y1
 //		ms_delay(2000);
 
-		for (i=0; i<6000/6000; i++)
+		for (i=0; i<mode.yellow/6000; i++)
 		{
 			x = trafficGenerator();
 			
@@ -124,7 +136,7 @@ int main (void)
 		GPIO_WritePin(GPIOA, 5, GPIO_PIN_RESET);//start g2
 //		ms_delay(3000);
 
-		for (i=0; i<18000/6000; i++)
+		for (i=0; i<mode.green/6000; i++)
 		{
 			x = trafficGenerator();
 			
@@ -158,7 +170,7 @@ int main (void)
 		GPIO_WritePin(GPIOA, 4, GPIO_PIN_RESET);//start y2
 //		ms_delay(2000);
 
-		for (i=0; i<6000/6000; i++)
+		for (i=0; i<mode.yellow/6000; i++)
 		{
 			x = trafficGenerator();
 			
