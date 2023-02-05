@@ -62,49 +62,69 @@ PortPin white[2][3] = {{{B, 1}, {B, 2}, {B, 5}}, {{B, 8}, {B, 7}, {B, 6}}};
 main.c(32): note: declare 'static' if the variable is not intended to be used outside of this translation unit
 PortPin white[2][3] = {{{B, 1}, {B, 2}, {B, 5}}, {{B, 8}, {B, 7}, {B, 6}}};
 ^
-main.c(34): warning: no previous prototype for function 'Find_Port' [-Wmissing-prototypes]
-GPIO_TypeDef * Find_Port(int Port_no)
-               ^
-main.c(34): note: declare 'static' if the function is not intended to be used outside of this translation unit
-GPIO_TypeDef * Find_Port(int Port_no)
+main.c(45): warning: no previous prototype for function 'Find_Port' [-Wmissing-prototypes]
+GPIO_TypeDef *Find_Port(int Port_no)
+              ^
+main.c(45): note: declare 'static' if the function is not intended to be used outside of this translation unit
+GPIO_TypeDef *Find_Port(int Port_no)
 ^
 static 
-main.c(42): warning: non-void function does not return a value in all control paths [-Wreturn-type]
-}       
+main.c(53): warning: non-void function does not return a value in all control paths [-Wreturn-type]
+}
 ^
-main.c(46): warning: implicit declaration of function 'rand' [-Wimplicit-function-declaration]
-    return rand() % 2 + 1;
-           ^
-main.c(44): warning: no previous prototype for function 'trafficGenerator' [-Wmissing-prototypes]
+main.c(57): warning: implicit declaration of function 'rand' [-Wimplicit-function-declaration]
+        return rand() % 3 + 1;
+               ^
+main.c(55): warning: no previous prototype for function 'trafficGenerator' [-Wmissing-prototypes]
 int trafficGenerator(void)
     ^
-main.c(44): note: declare 'static' if the function is not intended to be used outside of this translation unit
+main.c(55): note: declare 'static' if the function is not intended to be used outside of this translation unit
 int trafficGenerator(void)
 ^
 static 
-main.c(50): warning: // comments are not allowed in this language [-Wcomment]
-//    srand(time(0));
+main.c(63): warning: // comments are not allowed in this language [-Wcomment]
+                GPIO_WritePin(Find_Port(a.Green.Port), a.Green.Pin, GPIO_PIN_RESET); // start g1
+                                                                                     ^
+main.c(59): warning: no previous prototype for function 'handle_traffic' [-Wmissing-prototypes]
+void handle_traffic(lane a, lane b)
+     ^
+main.c(59): note: declare 'static' if the function is not intended to be used outside of this translation unit
+void handle_traffic(lane a, lane b)
 ^
-main.c(82): warning: mixing declarations and code is a C99 extension [-Wdeclaration-after-statement]
-                        int y = trafficGenerator();
-                            ^
-main.c(135): warning: mixing declarations and code is a C99 extension [-Wdeclaration-after-statement]
-                        int y = trafficGenerator();
-                            ^
-main.c(194): warning: mixing declarations and code is a C99 extension [-Wdeclaration-after-statement]
-                        int y = trafficGenerator();
-                            ^
-main.c(247): warning: mixing declarations and code is a C99 extension [-Wdeclaration-after-statement]
-                        int y = trafficGenerator();
-                            ^
-main.c(57): warning: mixing declarations and code is a C99 extension [-Wdeclaration-after-statement]
-        GPIO_InitTypeDef z;
-                         ^
-17 warnings generated.
+static 
+main.c(181): warning: declaration shadows a variable in the global scope [-Wshadow]
+        traffic mode = normal;
+                ^
+main.c(21): note: previous declaration is here
+traffic mode;
+        ^
+main.c(181): warning: mixing declarations and code is a C99 extension [-Wdeclaration-after-statement]
+        traffic mode = normal;
+                ^
+main.c(181): warning: unused variable 'mode' [-Wunused-variable]
+main.c(21): warning: no previous extern declaration for non-static variable 'mode' [-Wmissing-variable-declarations]
+traffic mode;
+        ^
+main.c(21): note: declare 'static' if the variable is not intended to be used outside of this translation unit
+traffic mode;
+^
+main.c(43): warning: no previous extern declaration for non-static variable 'Vertical' [-Wmissing-variable-declarations]
+lane Vertical, Horizontal;
+     ^
+main.c(43): note: declare 'static' if the variable is not intended to be used outside of this translation unit
+lane Vertical, Horizontal;
+^
+main.c(43): warning: no previous extern declaration for non-static variable 'Horizontal' [-Wmissing-variable-declarations]
+lane Vertical, Horizontal;
+               ^
+main.c(43): note: declare 'static' if the variable is not intended to be used outside of this translation unit
+lane Vertical, Horizontal;
+^
+19 warnings generated.
 compiling main.c...
 linking...
-Program Size: Code=3620 RO-data=484 RW-data=120 ZI-data=1864  
-".\Objects\Traffic Simulation.axf" - 0 Error(s), 17 Warning(s).
+Program Size: Code=2948 RO-data=484 RW-data=12 ZI-data=2024  
+".\Objects\Traffic Simulation.axf" - 0 Error(s), 19 Warning(s).
 
 <h2>Software Packages used:</h2>
 
@@ -135,7 +155,7 @@ Package Vendor: Keil
       Include file:  Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f4xx.h
       Source file:   MDK/Device/Source/ARM/STM32F4xx_OTP.s
       Source file:   Drivers/CMSIS/Device/ST/STM32F4xx/Source/Templates/system_stm32f4xx.c
-Build Time Elapsed:  00:00:03
+Build Time Elapsed:  00:00:06
 </pre>
 </body>
 </html>

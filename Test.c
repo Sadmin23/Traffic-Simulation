@@ -30,6 +30,17 @@ typedef struct
 
 PortPin white[2][3] = {{{A, 6}, {A, 9}, {A, 10}}, {{A, 11}, {B, 5}, {B, 10}}};
 
+typedef struct
+{
+    PortPin Green;
+    PortPin Yellow;
+    PortPin Red;
+    PortPin White[2][3];
+
+} lane;
+
+lane Vertical;
+
 void Find_Port(int Port_no)
 {
     if (Port_no == A)
@@ -42,6 +53,8 @@ void Find_Port(int Port_no)
 int main()
 {
     srand(time(0));
+
+    // Vertical.Green.Pin
 
     while (1)
     {
