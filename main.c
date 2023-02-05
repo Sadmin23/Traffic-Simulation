@@ -30,6 +30,18 @@ typedef struct
 
 PortPin white2[2][3] = {{{A, 12}, {A, 11}, {B, 0}}, {{A, 8}, {A, 9}, {A, 10}}};
 PortPin white[2][3] = {{{B, 1}, {B, 2}, {B, 5}}, {{B, 8}, {B, 7}, {B, 6}}};
+
+typedef struct
+{
+    PortPin Green;
+    PortPin Yellow;
+    PortPin Red;
+		PortPin White[2][3];
+		
+} lane;
+
+//lane vertical
+
 	
 GPIO_TypeDef * Find_Port(int Port_no)
 {
@@ -43,7 +55,7 @@ GPIO_TypeDef * Find_Port(int Port_no)
 	
 int trafficGenerator(void)
 {
-    return rand() % 3 + 1;
+    return rand() % 2 + 1;
 }
 int main (void)
 {	
@@ -54,10 +66,10 @@ int main (void)
 	initClock();
 	sysInit();
 	
-	GPIO_InitTypeDef y;
+	GPIO_InitTypeDef z;
 	
-	GPIO_Init(GPIOA, &y);
-	GPIO_Init(GPIOB, &y);
+	GPIO_Init(GPIOA, &z);
+	GPIO_Init(GPIOB, &z);
 	
 	while(1)
 	{
@@ -167,9 +179,13 @@ int main (void)
 				int a = white2[1][j].Port;
 				uint16_t b = white2[1][j].Pin;
 				GPIO_WritePin(Find_Port(a),b, GPIO_PIN_SET);
-			}	
+			}
+			if (x<3 && y<3)
+				mode = delayed;
+			else 
+				mode = normal;
 		}
-
+		
 		GPIO_WritePin(GPIOA, 6, GPIO_PIN_SET);//stop y1
 		GPIO_WritePin(GPIOA, 5, GPIO_PIN_RESET);//start r1		
 		GPIO_WritePin(GPIOA, 0, GPIO_PIN_SET);//stop r2
@@ -275,20 +291,16 @@ int main (void)
 				int a = white[1][j].Port;
 				uint16_t b = white[1][j].Pin;
 				GPIO_WritePin(Find_Port(a),b, GPIO_PIN_SET);
-			}	
+			}
+			if (x<3 && y<3)
+				mode = delayed;
+			else 
+				mode = normal;
 		}
 
 		GPIO_WritePin(GPIOA, 1, GPIO_PIN_SET);//stop y2
 		GPIO_WritePin(GPIOA, 5, GPIO_PIN_SET);//stop r1
 
-/*
-		int i;
-
-		for (i=0; i<16; i++)
-				GPIO_WritePin(GPIOA, i, GPIO_PIN_RESET);
-		for (i=0; i<16; i++)
-				GPIO_WritePin(GPIOB, i, GPIO_PIN_RESET);				
-*/
 	}	
 }
 

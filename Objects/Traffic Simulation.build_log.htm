@@ -73,7 +73,7 @@ main.c(42): warning: non-void function does not return a value in all control pa
 }       
 ^
 main.c(46): warning: implicit declaration of function 'rand' [-Wimplicit-function-declaration]
-    return rand() % 3 + 1;
+    return rand() % 2 + 1;
            ^
 main.c(44): warning: no previous prototype for function 'trafficGenerator' [-Wmissing-prototypes]
 int trafficGenerator(void)
@@ -85,50 +85,26 @@ static
 main.c(50): warning: // comments are not allowed in this language [-Wcomment]
 //    srand(time(0));
 ^
-main.c(82): warning: declaration shadows a local variable [-Wshadow]
-                        int y = trafficGenerator();
-                            ^
-main.c(57): note: previous declaration is here
-        GPIO_InitTypeDef y;
-                         ^
 main.c(82): warning: mixing declarations and code is a C99 extension [-Wdeclaration-after-statement]
                         int y = trafficGenerator();
                             ^
-main.c(135): warning: declaration shadows a local variable [-Wshadow]
-                        int y = trafficGenerator();
-                            ^
-main.c(57): note: previous declaration is here
-        GPIO_InitTypeDef y;
-                         ^
 main.c(135): warning: mixing declarations and code is a C99 extension [-Wdeclaration-after-statement]
                         int y = trafficGenerator();
                             ^
-main.c(190): warning: declaration shadows a local variable [-Wshadow]
+main.c(194): warning: mixing declarations and code is a C99 extension [-Wdeclaration-after-statement]
                         int y = trafficGenerator();
                             ^
-main.c(57): note: previous declaration is here
-        GPIO_InitTypeDef y;
-                         ^
-main.c(190): warning: mixing declarations and code is a C99 extension [-Wdeclaration-after-statement]
-                        int y = trafficGenerator();
-                            ^
-main.c(243): warning: declaration shadows a local variable [-Wshadow]
-                        int y = trafficGenerator();
-                            ^
-main.c(57): note: previous declaration is here
-        GPIO_InitTypeDef y;
-                         ^
-main.c(243): warning: mixing declarations and code is a C99 extension [-Wdeclaration-after-statement]
+main.c(247): warning: mixing declarations and code is a C99 extension [-Wdeclaration-after-statement]
                         int y = trafficGenerator();
                             ^
 main.c(57): warning: mixing declarations and code is a C99 extension [-Wdeclaration-after-statement]
-        GPIO_InitTypeDef y;
+        GPIO_InitTypeDef z;
                          ^
-21 warnings generated.
+17 warnings generated.
 compiling main.c...
 linking...
-Program Size: Code=3512 RO-data=484 RW-data=108 ZI-data=1864  
-".\Objects\Traffic Simulation.axf" - 0 Error(s), 21 Warning(s).
+Program Size: Code=3620 RO-data=484 RW-data=120 ZI-data=1864  
+".\Objects\Traffic Simulation.axf" - 0 Error(s), 17 Warning(s).
 
 <h2>Software Packages used:</h2>
 
@@ -159,7 +135,7 @@ Package Vendor: Keil
       Include file:  Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f4xx.h
       Source file:   MDK/Device/Source/ARM/STM32F4xx_OTP.s
       Source file:   Drivers/CMSIS/Device/ST/STM32F4xx/Source/Templates/system_stm32f4xx.c
-Build Time Elapsed:  00:00:04
+Build Time Elapsed:  00:00:03
 </pre>
 </body>
 </html>
