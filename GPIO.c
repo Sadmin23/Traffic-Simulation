@@ -9,8 +9,7 @@ void GPIO_WritePin(GPIO_TypeDef *GPIOx,uint16_t GPIO_pin,GPIO_PinState PinState)
 			GPIOx->BSRR |= ((1<<GPIO_pin)<<16);
 }
 void GPIO_Init(GPIO_TypeDef* GPIOx,GPIO_InitTypeDef *GPIO_Init)
-{
-// You need to implement this function	
+{	
 
 		RCC->AHB1ENR |= (1<<0);
 		RCC->AHB1ENR |= (1<<1);
@@ -21,9 +20,7 @@ void GPIO_Init(GPIO_TypeDef* GPIOx,GPIO_InitTypeDef *GPIO_Init)
 		{
 			GPIOx->MODER |= (1<<2*i);
 		}
-//		GPIOx->MODER |= (1<<14);
-//		GPIOx->MODER |= (1<<10);
 		
-		GPIOx->OTYPER = 0;
-		GPIOx->OSPEEDR = 0;
+		GPIOx->OTYPER = GPIO_Init->Alternate;
+		GPIOx->OSPEEDR = GPIO_Init->Speed;
 }

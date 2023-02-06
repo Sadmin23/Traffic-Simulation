@@ -82,59 +82,66 @@ main.c(56): note: declare 'static' if the function is not intended to be used ou
 int trafficGenerator(void)
 ^
 static 
+main.c(64): warning: // comments are not allowed in this language [-Wcomment]
+//                      x = trafficGenerator();
+^
 main.c(62): warning: unused variable 'i' [-Wunused-variable]
-                int i, j, k, x, y;
+                int i, j, k;
                     ^
 main.c(60): warning: no previous prototype for function 'handle_lights' [-Wmissing-prototypes]
-void handle_lights(lane a, lane b)
+void handle_lights(lane a, lane b, int x, int y)
      ^
 main.c(60): note: declare 'static' if the function is not intended to be used outside of this translation unit
-void handle_lights(lane a, lane b)
+void handle_lights(lane a, lane b, int x, int y)
 ^
 static 
-main.c(95): warning: // comments are not allowed in this language [-Wcomment]
-                GPIO_WritePin(Find_Port(a.Green.Port), a.Green.Pin, GPIO_PIN_RESET); // start g1
-                                                                                     ^
 main.c(93): warning: unused variable 'j' [-Wunused-variable]
                 int i, j, k, x, y;
                        ^
 main.c(93): warning: unused variable 'k' [-Wunused-variable]
                 int i, j, k, x, y;
                           ^
-main.c(93): warning: unused variable 'x' [-Wunused-variable]
-                int i, j, k, x, y;
-                             ^
-main.c(93): warning: unused variable 'y' [-Wunused-variable]
-                int i, j, k, x, y;
-                                ^
 main.c(91): warning: no previous prototype for function 'handle_traffic' [-Wmissing-prototypes]
-void handle_traffic(lane a, lane b)
+void handle_traffic(lane a, lane b, traffic *state)
      ^
 main.c(91): note: declare 'static' if the function is not intended to be used outside of this translation unit
-void handle_traffic(lane a, lane b)
+void handle_traffic(lane a, lane b, traffic *state)
 ^
 static 
-main.c(119): warning: a function declaration without a prototype is deprecated in all versions of C [-Wstrict-prototypes]
+main.c(115): warning: variable 'y' may be uninitialized when used here [-Wconditional-uninitialized]
+                if (x<3 && y<3)
+                           ^
+main.c(93): note: initialize the variable 'y' to silence this warning
+                int i, j, k, x, y;
+                                 ^
+                                  = 0
+main.c(115): warning: variable 'x' may be uninitialized when used here [-Wconditional-uninitialized]
+                if (x<3 && y<3)
+                    ^
+main.c(93): note: initialize the variable 'x' to silence this warning
+                int i, j, k, x, y;
+                              ^
+                               = 0
+main.c(120): warning: a function declaration without a prototype is deprecated in all versions of C [-Wstrict-prototypes]
 void init_pins()
               ^
                void
-main.c(119): warning: no previous prototype for function 'init_pins' [-Wmissing-prototypes]
+main.c(120): warning: no previous prototype for function 'init_pins' [-Wmissing-prototypes]
 void init_pins()
      ^
-main.c(119): note: declare 'static' if the function is not intended to be used outside of this translation unit
+main.c(120): note: declare 'static' if the function is not intended to be used outside of this translation unit
 void init_pins()
 ^
 static 
-main.c(165): warning: declaration shadows a variable in the global scope [-Wshadow]
+main.c(164): warning: declaration shadows a variable in the global scope [-Wshadow]
         traffic mode = normal;
                 ^
 main.c(24): note: previous declaration is here
 traffic mode;
         ^
-main.c(165): warning: mixing declarations and code is a C99 extension [-Wdeclaration-after-statement]
+main.c(164): warning: mixing declarations and code is a C99 extension [-Wdeclaration-after-statement]
         traffic mode = normal;
                 ^
-main.c(165): warning: unused variable 'mode' [-Wunused-variable]
 main.c(24): warning: no previous extern declaration for non-static variable 'mode' [-Wmissing-variable-declarations]
 traffic mode;
         ^
@@ -153,11 +160,11 @@ lane Vertical, Horizontal;
 main.c(44): note: declare 'static' if the variable is not intended to be used outside of this translation unit
 lane Vertical, Horizontal;
 ^
-27 warnings generated.
+26 warnings generated.
 compiling main.c...
 linking...
-Program Size: Code=2900 RO-data=484 RW-data=12 ZI-data=2024  
-".\Objects\Traffic Simulation.axf" - 0 Error(s), 27 Warning(s).
+Program Size: Code=3004 RO-data=484 RW-data=24 ZI-data=2008  
+".\Objects\Traffic Simulation.axf" - 0 Error(s), 26 Warning(s).
 
 <h2>Software Packages used:</h2>
 
@@ -183,12 +190,12 @@ Package Vendor: Keil
    * Component: ARM::CMSIS:CORE:5.6.0
 
    * Component: Keil::Device:Startup:2.6.3
-      Source file:   Drivers/CMSIS/Device/ST/STM32F4xx/Source/Templates/arm/startup_stm32f446xx.s
       Source file:   MDK/Device/Source/ARM/STM32F446xx_OPT.s
-      Include file:  Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f4xx.h
       Source file:   MDK/Device/Source/ARM/STM32F4xx_OTP.s
+      Include file:  Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f4xx.h
+      Source file:   Drivers/CMSIS/Device/ST/STM32F4xx/Source/Templates/arm/startup_stm32f446xx.s
       Source file:   Drivers/CMSIS/Device/ST/STM32F4xx/Source/Templates/system_stm32f4xx.c
-Build Time Elapsed:  00:00:06
+Build Time Elapsed:  00:00:05
 </pre>
 </body>
 </html>

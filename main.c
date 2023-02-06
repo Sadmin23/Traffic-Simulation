@@ -57,16 +57,16 @@ int trafficGenerator(void)
 {
 	return rand() % 3 + 1;
 }
-void handle_lights(lane a, lane b)
+void handle_lights(lane a, lane b, int x, int y)
 {
-		int i, j, k, x, y;
+		int i, j, k;
 	
-			x = trafficGenerator();
+//			x = trafficGenerator();
 
 			for (j = 0; j < x; j++)
 					GPIO_WritePin(Find_Port(b.White[0][j].Port), b.White[0][j].Pin, GPIO_PIN_RESET);
 			
-			y = trafficGenerator();
+//			y = trafficGenerator();
 
 			for (j = 0; j < y; j++)
 				GPIO_WritePin(Find_Port(b.White[1][j].Port), b.White[1][j].Pin, GPIO_PIN_RESET);
@@ -88,33 +88,34 @@ void handle_lights(lane a, lane b)
 			for (j = 0; j < y; j++)
 				GPIO_WritePin(Find_Port(b.White[1][j].Port), b.White[1][j].Pin, GPIO_PIN_SET);
 }
-void handle_traffic(lane a, lane b)
+void handle_traffic(lane a, lane b, traffic *state)
 {
 		int i, j, k, x, y;
 
 		GPIO_WritePin(Find_Port(a.Green.Port), a.Green.Pin, GPIO_PIN_RESET); // start g1
 		GPIO_WritePin(Find_Port(b.Red.Port), b.Red.Pin, GPIO_PIN_RESET); // start r2
-		//		ms_delay(3000);
-
-		mode = normal;
 	
-		for (i = 0; i < mode.green / 6000; i++)
+		for (i = 0; i < state->green / 6000; i++)
 		{
-			handle_lights(a,b);
+			x = trafficGenerator();		y = trafficGenerator();
+			handle_lights(a,b,x,y);
 		}
-
 		GPIO_WritePin(Find_Port(a.Green.Port), a.Green.Pin, GPIO_PIN_SET);	 // stop g1
 		GPIO_WritePin(Find_Port(a.Yellow.Port), a.Yellow.Pin, GPIO_PIN_RESET); // start y1
-		//		ms_delay(2000);
-
-		for (i = 0; i < mode.yellow / 6000; i++)
+	
+		for (i = 0; i < state->yellow / 6000; i++)
 		{
-			handle_lights(a,b);			
+			x = trafficGenerator();		y = trafficGenerator();
+			handle_lights(a,b,x,y);			
 		}
-
+			
 		GPIO_WritePin(Find_Port(a.Yellow.Port), a.Yellow.Pin, GPIO_PIN_SET);	 // stop y1
 		GPIO_WritePin(Find_Port(b.Red.Port), b.Red.Pin, GPIO_PIN_SET); // stop r2
-		//		ms_delay(2000);
+	
+		if (x<3 && y<3)
+			*state=delayed;
+		else
+			*state=normal;
 }
 void init_pins()
 {
@@ -158,8 +159,6 @@ void init_pins()
 }
 int main(void)
 {
-	//    srand(time(0));
-	
 	init_pins();
 	
 	traffic mode = normal;
@@ -168,14 +167,20 @@ int main(void)
 	sysInit();
 
 	GPIO_InitTypeDef z;
+	
+	z.Alternate=0;
+	z.Pull=0;
+	z.Speed=0;
+	z.Pin=16;
+	z.Mode=0;
 
 	GPIO_Init(GPIOA, &z);
 	GPIO_Init(GPIOB, &z);
 
 	while (1)
 	{
-		handle_traffic(Vertical, Horizontal);
-		handle_traffic(Horizontal, Vertical);
+		handle_traffic(Vertical, Horizontal, &mode);
+		handle_traffic(Horizontal, Vertical, &mode);
 
 	}
 }
