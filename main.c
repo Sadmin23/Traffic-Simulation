@@ -29,9 +29,6 @@ typedef struct
 	uint16_t Pin;
 } PortPin;
 
-PortPin white2[2][3] = {{{A, 12}, {A, 11}, {B, 0}}, {{A, 8}, {A, 9}, {A, 10}}};
-PortPin white[2][3] = {{{B, 1}, {B, 2}, {B, 5}}, {{B, 8}, {B, 7}, {B, 6}}};
-
 typedef struct
 {
 	PortPin Green;
@@ -61,13 +58,9 @@ void handle_lights(lane a, lane b, int x, int y)
 {
 		int i, j, k;
 	
-//			x = trafficGenerator();
-
 			for (j = 0; j < x; j++)
 					GPIO_WritePin(Find_Port(b.White[0][j].Port), b.White[0][j].Pin, GPIO_PIN_RESET);
 			
-//			y = trafficGenerator();
-
 			for (j = 0; j < y; j++)
 				GPIO_WritePin(Find_Port(b.White[1][j].Port), b.White[1][j].Pin, GPIO_PIN_RESET);
 			
@@ -178,9 +171,15 @@ int main(void)
 	GPIO_Init(GPIOB, &z);
 
 	while (1)
-	{
+	{	
 		handle_traffic(Vertical, Horizontal, &mode);
 		handle_traffic(Horizontal, Vertical, &mode);
 
+/*
+		GPIO_WritePin(GPIOA, 5, GPIO_PIN_RESET);
+		ms_delay(1000);
+		GPIO_WritePin(GPIOA, 5, GPIO_PIN_SET);
+		ms_delay(1000);		
+*/		
 	}
 }
