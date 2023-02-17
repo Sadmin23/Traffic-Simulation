@@ -5,7 +5,7 @@
 <h2>Tool Versions:</h2>
 IDE-Version: µVision V5.38.0.0
 Copyright (C) 2022 ARM Ltd and ARM Germany GmbH. All rights reserved.
-License Information: Md. Sadmin Tahmid Khan, University of Dhaka, LIC=----
+License Information: Saim Ahmmed Utsho, University of Dhaka , LIC=----
  
 Tool Versions:
 Toolchain:       MDK-Lite  Version: 5.38.0.0
@@ -21,150 +21,13 @@ Target DLL:      STLink\ST-LINKIII-KEIL_SWO.dll V3.1.0.0
 Dialog DLL:      TCM.DLL V1.56.4.0
  
 <h2>Project:</h2>
-E:\STM projects\Traffic Simulation\Traffic Simulation.uvprojx
-Project File Date:  02/02/2023
+D:\Pdf Book\3rd Year Pdf Book\3rd Year 1st Semester\Labs\Microcontrollers\Traffic-Simulation-master\Traffic-Simulation-master\Traffic Simulation.uvprojx
+Project File Date:  02/11/2023
 
 <h2>Output:</h2>
 *** Using Compiler 'V6.19', folder: 'C:\Keil_v5\ARM\ARMCLANG\Bin'
 Build target 'Target 1'
-main.c(2): warning: In file included from...
-./CLOCK.h(9): warning: // comments are not allowed in this language [-Wcomment]
-#define PLL_P 0 //0 to the sixteenth position (PLL=2)
-                ^
-main.c(5): warning: In file included from...
-./USART.h(18): warning: // comments are not allowed in this language [-Wcomment]
-// USART 2 Configuration
-^
-main.c(22): warning: no previous extern declaration for non-static variable 'normal' [-Wmissing-variable-declarations]
-traffic normal = {18000, 6000, 24000};
-        ^
-main.c(22): note: declare 'static' if the variable is not intended to be used outside of this translation unit
-traffic normal = {18000, 6000, 24000};
-^
-main.c(23): warning: no previous extern declaration for non-static variable 'delayed' [-Wmissing-variable-declarations]
-traffic delayed = {24000, 6000, 30000};
-        ^
-main.c(23): note: declare 'static' if the variable is not intended to be used outside of this translation unit
-traffic delayed = {24000, 6000, 30000};
-^
-main.c(26): warning: padding size of 'PortPin' with 2 bytes to alignment boundary [-Wpadded]
-typedef struct
-        ^
-main.c(32): warning: no previous extern declaration for non-static variable 'white2' [-Wmissing-variable-declarations]
-PortPin white2[2][3] = {{{A, 12}, {A, 11}, {B, 0}}, {{A, 8}, {A, 9}, {A, 10}}};
-        ^
-main.c(32): note: declare 'static' if the variable is not intended to be used outside of this translation unit
-PortPin white2[2][3] = {{{A, 12}, {A, 11}, {B, 0}}, {{A, 8}, {A, 9}, {A, 10}}};
-^
-main.c(33): warning: no previous extern declaration for non-static variable 'white' [-Wmissing-variable-declarations]
-PortPin white[2][3] = {{{B, 1}, {B, 2}, {B, 5}}, {{B, 8}, {B, 7}, {B, 6}}};
-        ^
-main.c(33): note: declare 'static' if the variable is not intended to be used outside of this translation unit
-PortPin white[2][3] = {{{B, 1}, {B, 2}, {B, 5}}, {{B, 8}, {B, 7}, {B, 6}}};
-^
-main.c(46): warning: no previous prototype for function 'Find_Port' [-Wmissing-prototypes]
-GPIO_TypeDef *Find_Port(int Port_no)
-              ^
-main.c(46): note: declare 'static' if the function is not intended to be used outside of this translation unit
-GPIO_TypeDef *Find_Port(int Port_no)
-^
-static 
-main.c(54): warning: non-void function does not return a value in all control paths [-Wreturn-type]
-}
-^
-main.c(58): warning: implicit declaration of function 'rand' [-Wimplicit-function-declaration]
-        return rand() % 3 + 1;
-               ^
-main.c(56): warning: no previous prototype for function 'trafficGenerator' [-Wmissing-prototypes]
-int trafficGenerator(void)
-    ^
-main.c(56): note: declare 'static' if the function is not intended to be used outside of this translation unit
-int trafficGenerator(void)
-^
-static 
-main.c(64): warning: // comments are not allowed in this language [-Wcomment]
-//                      x = trafficGenerator();
-^
-main.c(62): warning: unused variable 'i' [-Wunused-variable]
-                int i, j, k;
-                    ^
-main.c(60): warning: no previous prototype for function 'handle_lights' [-Wmissing-prototypes]
-void handle_lights(lane a, lane b, int x, int y)
-     ^
-main.c(60): note: declare 'static' if the function is not intended to be used outside of this translation unit
-void handle_lights(lane a, lane b, int x, int y)
-^
-static 
-main.c(93): warning: unused variable 'j' [-Wunused-variable]
-                int i, j, k, x, y;
-                       ^
-main.c(93): warning: unused variable 'k' [-Wunused-variable]
-                int i, j, k, x, y;
-                          ^
-main.c(91): warning: no previous prototype for function 'handle_traffic' [-Wmissing-prototypes]
-void handle_traffic(lane a, lane b, traffic *state)
-     ^
-main.c(91): note: declare 'static' if the function is not intended to be used outside of this translation unit
-void handle_traffic(lane a, lane b, traffic *state)
-^
-static 
-main.c(115): warning: variable 'y' may be uninitialized when used here [-Wconditional-uninitialized]
-                if (x<3 && y<3)
-                           ^
-main.c(93): note: initialize the variable 'y' to silence this warning
-                int i, j, k, x, y;
-                                 ^
-                                  = 0
-main.c(115): warning: variable 'x' may be uninitialized when used here [-Wconditional-uninitialized]
-                if (x<3 && y<3)
-                    ^
-main.c(93): note: initialize the variable 'x' to silence this warning
-                int i, j, k, x, y;
-                              ^
-                               = 0
-main.c(120): warning: a function declaration without a prototype is deprecated in all versions of C [-Wstrict-prototypes]
-void init_pins()
-              ^
-               void
-main.c(120): warning: no previous prototype for function 'init_pins' [-Wmissing-prototypes]
-void init_pins()
-     ^
-main.c(120): note: declare 'static' if the function is not intended to be used outside of this translation unit
-void init_pins()
-^
-static 
-main.c(164): warning: declaration shadows a variable in the global scope [-Wshadow]
-        traffic mode = normal;
-                ^
-main.c(24): note: previous declaration is here
-traffic mode;
-        ^
-main.c(164): warning: mixing declarations and code is a C99 extension [-Wdeclaration-after-statement]
-        traffic mode = normal;
-                ^
-main.c(24): warning: no previous extern declaration for non-static variable 'mode' [-Wmissing-variable-declarations]
-traffic mode;
-        ^
-main.c(24): note: declare 'static' if the variable is not intended to be used outside of this translation unit
-traffic mode;
-^
-main.c(44): warning: no previous extern declaration for non-static variable 'Vertical' [-Wmissing-variable-declarations]
-lane Vertical, Horizontal;
-     ^
-main.c(44): note: declare 'static' if the variable is not intended to be used outside of this translation unit
-lane Vertical, Horizontal;
-^
-main.c(44): warning: no previous extern declaration for non-static variable 'Horizontal' [-Wmissing-variable-declarations]
-lane Vertical, Horizontal;
-               ^
-main.c(44): note: declare 'static' if the variable is not intended to be used outside of this translation unit
-lane Vertical, Horizontal;
-^
-26 warnings generated.
-compiling main.c...
-linking...
-Program Size: Code=3004 RO-data=484 RW-data=24 ZI-data=2008  
-".\Objects\Traffic Simulation.axf" - 0 Error(s), 26 Warning(s).
+".\Objects\Traffic Simulation.axf" - 0 Error(s), 0 Warning(s).
 
 <h2>Software Packages used:</h2>
 
@@ -182,8 +45,8 @@ Package Vendor: Keil
 
 <h2>Collection of Component include folders:</h2>
   ./RTE/_Target_1
-  C:/Users/Asus/AppData/Local/Arm/Packs/ARM/CMSIS/5.9.0/CMSIS/Core/Include
-  C:/Users/Asus/AppData/Local/Arm/Packs/Keil/STM32F4xx_DFP/2.17.0/Drivers/CMSIS/Device/ST/STM32F4xx/Include
+  C:/Users/saima/AppData/Local/Arm/Packs/ARM/CMSIS/5.9.0/CMSIS/Core/Include
+  C:/Users/saima/AppData/Local/Arm/Packs/Keil/STM32F4xx_DFP/2.17.0/Drivers/CMSIS/Device/ST/STM32F4xx/Include
 
 <h2>Collection of Component Files used:</h2>
 
@@ -192,10 +55,10 @@ Package Vendor: Keil
    * Component: Keil::Device:Startup:2.6.3
       Source file:   MDK/Device/Source/ARM/STM32F446xx_OPT.s
       Source file:   MDK/Device/Source/ARM/STM32F4xx_OTP.s
-      Include file:  Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f4xx.h
       Source file:   Drivers/CMSIS/Device/ST/STM32F4xx/Source/Templates/arm/startup_stm32f446xx.s
+      Include file:  Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f4xx.h
       Source file:   Drivers/CMSIS/Device/ST/STM32F4xx/Source/Templates/system_stm32f4xx.c
-Build Time Elapsed:  00:00:05
+Build Time Elapsed:  00:00:00
 </pre>
 </body>
 </html>
