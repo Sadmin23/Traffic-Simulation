@@ -155,6 +155,8 @@ void handle_traffic(lane a, lane b, traffic *state)
 
 static GPIO_InitTypeDef GPIO_InitConfig;
 
+//input section added...
+
 void gpio_input_config(GPIO_TypeDef* GPIOx){
         GPIO_InitConfig.Mode = GPIO_MODE_INPUT;
         GPIO_InitConfig.Pin = GPIO_PIN_0 | GPIO_PIN_1 | GPIO_PIN_2 |
