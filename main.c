@@ -5,6 +5,9 @@
 #include "USART.h"
 #include "time.h"
 
+#define LED_PIN     5
+#define GPIO_PORT   GPIOA
+
 enum
 {
 	A,
@@ -21,6 +24,7 @@ typedef struct
 
 traffic normal = {18000, 6000, 24000};
 traffic delayed = {24000, 6000, 30000};
+traffic testing = {6000, 4000, 10000};	//testing
 traffic mode;
 
 typedef struct
@@ -54,6 +58,12 @@ int trafficGenerator(void)
 {
 	return rand() % 3 + 1;
 }
+
+int max(int a, int b){
+	if(a>b) return a;
+	else return b;
+}
+
 void handle_lights(lane a, lane b, int x, int y)
 {
 		int i, j, k;
@@ -84,32 +94,75 @@ void handle_lights(lane a, lane b, int x, int y)
 void handle_traffic(lane a, lane b, traffic *state)
 {
 		int i, j, k, x, y;
+		int mx1=-1,mx2=-1;
 
 		GPIO_WritePin(Find_Port(a.Green.Port), a.Green.Pin, GPIO_PIN_RESET); // start g1
 		GPIO_WritePin(Find_Port(b.Red.Port), b.Red.Pin, GPIO_PIN_RESET); // start r2
 	
 		for (i = 0; i < state->green / 6000; i++)
 		{
-			x = trafficGenerator();		y = trafficGenerator();
+			x = trafficGenerator(); mx1 = max(mx1,x); x = mx1;
+			y = trafficGenerator(); mx2 = max(mx2,y); y = mx2;
+			
 			handle_lights(a,b,x,y);
 		}
 		GPIO_WritePin(Find_Port(a.Green.Port), a.Green.Pin, GPIO_PIN_SET);	 // stop g1
 		GPIO_WritePin(Find_Port(a.Yellow.Port), a.Yellow.Pin, GPIO_PIN_RESET); // start y1
 	
+		
+	 
 		for (i = 0; i < state->yellow / 6000; i++)
 		{
-			x = trafficGenerator();		y = trafficGenerator();
+			x = trafficGenerator(); mx1 = max(mx1,x); x = mx1;
+			y = trafficGenerator(); mx2 = max(mx2,y); y = mx2;
 			handle_lights(a,b,x,y);			
 		}
 			
 		GPIO_WritePin(Find_Port(a.Yellow.Port), a.Yellow.Pin, GPIO_PIN_SET);	 // stop y1
 		GPIO_WritePin(Find_Port(b.Red.Port), b.Red.Pin, GPIO_PIN_SET); // stop r2
+		
+		uint16_t led1 = GPIO_PIN_0 & GPIOC->IDR;
+		uint16_t led2 = GPIO_PIN_1 & GPIOC->IDR;
+		uint16_t led3 = GPIO_PIN_2 & GPIOC->IDR;
+		uint16_t led4 = GPIO_PIN_3 & GPIOC->IDR;
+		
+		uint16_t led5 = GPIO_PIN_10 & GPIOC->IDR;
+		uint16_t led6 = GPIO_PIN_12 & GPIOC->IDR;
+		
+		//vertical -> red
+		if(led5){
+			if(led1 & led2) *state = normal;
+			else if( (led1 & led2) == 0) *state = delayed;
+		}
+		
+		
+		//horizontal -> red
+		if(led6){
+			if(led3 & led4) *state = normal;
+			else if( (led3 & led4) == 0) *state = delayed;
+		}
+		
 	
-		if (x<3 && y<3)
+		/*if (x<3 && y<3)
 			*state=delayed;
 		else
-			*state=normal;
+			*state=normal;*/
 }
+
+
+
+// new fnc
+
+static GPIO_InitTypeDef GPIO_InitConfig;
+
+void gpio_input_config(GPIO_TypeDef* GPIOx){
+        GPIO_InitConfig.Mode = GPIO_MODE_INPUT;
+        GPIO_InitConfig.Pin = GPIO_PIN_0 | GPIO_PIN_1 | GPIO_PIN_2 |
+        GPIO_PIN_3 | GPIO_PIN_10 | GPIO_PIN_12;
+        GPIO_Init(GPIOx,&GPIO_InitConfig);
+}
+
+
 void init_pins()
 {
 	Vertical.Green.Port = A;
@@ -169,17 +222,26 @@ int main(void)
 
 	GPIO_Init(GPIOA, &z);
 	GPIO_Init(GPIOB, &z);
+	
+	
+	gpio_input_config(GPIOC);  //fnc call
 
 	while (1)
 	{	
 		handle_traffic(Vertical, Horizontal, &mode);
 		handle_traffic(Horizontal, Vertical, &mode);
 
-/*
-		GPIO_WritePin(GPIOA, 5, GPIO_PIN_RESET);
+
+		/*GPIO_WritePin(GPIOA, 5, GPIO_PIN_RESET);
 		ms_delay(1000);
 		GPIO_WritePin(GPIOA, 5, GPIO_PIN_SET);
-		ms_delay(1000);		
-*/		
+		ms_delay(1000);*/		
+		
+		
+		
 	}
-}
+ 
+ }
+		
+		
+	
